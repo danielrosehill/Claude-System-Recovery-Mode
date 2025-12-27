@@ -1,0 +1,90 @@
+#!/bin/sh
+#
+# GRUB menu entry generator for Claude Recovery Mode
+#
+# This script generates a GRUB menu entry that boots into
+# Claude Recovery Mode - a minimal TTY with Claude CLI.
+#
+
+set -e
+
+# Source GRUB helper functions
+. /usr/share/grub/grub-mkconfig_lib
+
+# Get the root device UUID
+GRUB_DEVICE_UUID="$(${grub_probe} --target=fs_uuid /)"
+
+# Find the latest kernel
+LINUX_ROOT_DEVICE="${GRUB_DEVICE}"
+if [ -z "${LINUX_ROOT_DEVICE}" ]; then
+    LINUX_ROOT_DEVICE="UUID=${GRUB_DEVICE_UUID}"
+fi
+
+# Get the boot device for vmlinuz/initrd
+GRUB_DEVICE_BOOT="$(${grub_probe} --target=device /boot)"
+GRUB_DEVICE_BOOT_UUID="$(${grub_probe} --target=fs_uuid /boot)"
+
+# Find the latest kernel version
+KERNEL_VERSION=""
+for vmlinuz in /boot/vmlinuz-*; do
+    if [ -f "$vmlinuz" ]; then
+        version="${vmlinuz#/boot/vmlinuz-}"
+        if [ -z "$KERNEL_VERSION" ] || dpkg --compare-versions "$version" gt "$KERNEL_VERSION" 2>/dev/null; then
+            KERNEL_VERSION="$version"
+        fi
+    fi
+done
+
+if [ -z "$KERNEL_VERSION" ]; then
+    echo "Warning: No kernel found for Claude Recovery Mode" >&2
+    exit 0
+fi
+
+VMLINUZ="/vmlinuz-${KERNEL_VERSION}"
+INITRD="/initrd.img-${KERNEL_VERSION}"
+
+# Check for btrfs subvolume
+ROOTFLAGS=""
+if [ -f /etc/fstab ]; then
+    SUBVOL=$(grep -E "^\s*UUID=${GRUB_DEVICE_UUID}" /etc/fstab 2>/dev/null | grep -oP 'subvol=\S+' | head -1 || true)
+    if [ -n "$SUBVOL" ]; then
+        ROOTFLAGS="rootflags=${SUBVOL}"
+    fi
+fi
+
+# Build kernel command line
+# - text: boot to text mode
+# - nomodeset: disable kernel mode setting (simpler graphics)
+# - systemd.unit: boot to our custom target
+CMDLINE="root=UUID=${GRUB_DEVICE_UUID} ro ${ROOTFLAGS} systemd.unit=claude-recovery.target text nomodeset"
+
+# Generate the menu entry
+cat << EOF
+menuentry 'Claude Recovery Mode' --class recovery --class gnu-linux --class gnu --class os {
+    recordfail
+    load_video
+    insmod gzio
+    if [ x\$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+    insmod part_gpt
+    insmod ext2
+    insmod btrfs
+EOF
+
+# Add search command
+if [ -n "$GRUB_DEVICE_BOOT_UUID" ] && [ "$GRUB_DEVICE_BOOT_UUID" != "$GRUB_DEVICE_UUID" ]; then
+    cat << EOF
+    search --no-floppy --fs-uuid --set=root ${GRUB_DEVICE_BOOT_UUID}
+EOF
+else
+    cat << EOF
+    search --no-floppy --fs-uuid --set=root ${GRUB_DEVICE_UUID}
+EOF
+fi
+
+cat << EOF
+    echo 'Loading Claude Recovery Mode...'
+    linux ${VMLINUZ} ${CMDLINE}
+    echo 'Loading initial ramdisk...'
+    initrd ${INITRD}
+}
+EOF

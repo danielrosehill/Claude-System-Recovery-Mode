@@ -1,0 +1,22 @@
+#  Claude Recovery Mode Target
+#
+#  A minimal boot target that provides a TTY with Claude CLI
+#  for AI-assisted system recovery.
+#
+#  This target boots with networking enabled (required for Claude API)
+#  but without graphical interface.
+
+[Unit]
+Description=Claude Recovery Mode
+Documentation=https://github.com/danielrosehill/Claude-System-Recovery-Mode
+Requires=sysinit.target
+Wants=network-online.target
+Wants=claude-recovery-getty@tty1.service
+After=sysinit.target network-online.target
+AllowIsolate=yes
+
+# Prevent conflicts with graphical targets
+Conflicts=graphical.target
+
+[Install]
+Alias=claude-recovery.target

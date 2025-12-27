@@ -1,0 +1,36 @@
+#  Claude Recovery Mode Getty Service
+#
+#  Auto-login getty that launches the Claude recovery launcher.
+#  The __CLAUDE_RECOVERY_USER__ placeholder is replaced during installation.
+
+[Unit]
+Description=Claude Recovery Mode on %I
+Documentation=https://github.com/danielrosehill/Claude-System-Recovery-Mode
+After=systemd-user-sessions.service network-online.target
+After=claude-recovery.target
+Wants=network-online.target
+
+# Only start on virtual consoles
+ConditionPathExists=/dev/tty0
+
+[Service]
+# Auto-login as the configured user and run the launcher
+# --autologin: automatically log in the specified user
+# --noclear: don't clear the screen (we do it in the launcher)
+# -l: invoke login shell
+ExecStart=-/sbin/agetty --autologin __CLAUDE_RECOVERY_USER__ --noclear -l /usr/local/bin/claude-recovery-launcher %I $TERM
+Type=idle
+Restart=always
+RestartSec=0
+UtmpIdentifier=%I
+StandardInput=tty
+StandardOutput=tty
+TTYPath=/dev/%I
+TTYReset=yes
+TTYVHangup=yes
+TTYVTDisallocate=yes
+IgnoreSIGPIPE=no
+SendSIGHUP=yes
+
+[Install]
+WantedBy=claude-recovery.target
