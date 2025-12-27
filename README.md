@@ -18,6 +18,23 @@ Instead of booting into a blank recovery shell, this mode launches directly into
 - **Auto-Install**: If Claude CLI isn't installed, it will attempt to install it automatically
 - **Updateable**: Recovery tools can be updated from GitHub with a single command
 
+## Quick Install
+
+One command to install Claude Recovery Mode:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/danielrosehill/Claude-System-Recovery-Mode/main/bootstrap.sh | sudo bash
+```
+
+Options:
+```bash
+# Install for specific user
+curl -fsSL https://raw.githubusercontent.com/danielrosehill/Claude-System-Recovery-Mode/main/bootstrap.sh | sudo bash -s -- --user myuser
+
+# Install for root
+curl -fsSL https://raw.githubusercontent.com/danielrosehill/Claude-System-Recovery-Mode/main/bootstrap.sh | sudo bash -s -- --root
+```
+
 ## Requirements
 
 - Ubuntu/Debian-based Linux distribution
@@ -27,6 +44,14 @@ Instead of booting into a blank recovery shell, this mode launches directly into
 - Anthropic API key configured for Claude CLI
 
 ## Installation
+
+### Quick Install (Recommended)
+
+See [Quick Install](#quick-install) above for the one-liner.
+
+### Manual Installation
+
+If you prefer to inspect the code first or have the repo locally:
 
 ```bash
 # Clone the repository
