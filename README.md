@@ -6,12 +6,17 @@ Instead of booting into a blank recovery shell, this mode launches directly into
 
 ## Features
 
+- **Guided Recovery Workflow**: Pre-populated slash commands guide you through diagnosis and remediation
+- **One-Command Start**: `/start` runs the full recovery workflow—profiles your system, gathers your diagnosis, and begins remediation
 - **GRUB Boot Entry**: Adds "Claude Recovery Mode" to your boot menu
 - **Minimal Boot**: Boots to a text-only TTY (no GUI overhead)
 - **Auto-Login**: Automatically logs in as your specified user
 - **Claude CLI**: Launches Claude immediately upon login
+- **Recovery Agents**: Pre-configured agents for diagnostics, logs, network, disk, services, and packages
+- **Recovery Commands**: Quick slash commands for common recovery tasks
 - **Network Enabled**: Boots with networking for Claude API access
 - **Auto-Install**: If Claude CLI isn't installed, it will attempt to install it automatically
+- **Updateable**: Recovery tools can be updated from GitHub with a single command
 
 ## Requirements
 
@@ -52,6 +57,64 @@ sudo ./install.sh --root
 - Type `exit` or press `Ctrl+C` to exit Claude and return to a shell
 - Type `/help` within Claude for available commands
 
+### Guided Recovery Workflow
+
+When Claude Recovery Mode launches, you'll see available slash commands displayed at the welcome screen. These commands are pre-configured specifically for recovery operations.
+
+#### The `/start` Command (Recommended)
+
+The easiest way to begin is with the master command:
+
+```
+/start
+```
+
+This runs the complete recovery workflow in sequence:
+1. **Profiles your system** — Gathers OS version, hardware info, and system state
+2. **Collects your diagnosis** — Asks you to describe the problem you're experiencing
+3. **Begins remediation** — Uses the gathered context to diagnose and fix the issue
+
+#### Individual Workflow Commands
+
+You can also run each step independently:
+
+| Command | Description |
+|---------|-------------|
+| `/profile-os` | Gather detailed OS and hardware information |
+| `/gather-diagnosis` | Describe your problem to Claude for analysis |
+| `/identify-problems` | Claude independently scans for system issues |
+
+**When to use individual commands:**
+- `/profile-os` — Run first if Claude needs context about your system
+- `/gather-diagnosis` — When you know what's wrong and want to explain it
+- `/identify-problems` — When you're not sure what's broken and want Claude to investigate
+
+### Recovery Commands
+
+Quick slash commands for common tasks:
+
+| Command | Description |
+|---------|-------------|
+| `/status` | Quick system health overview |
+| `/errors` | Show recent error-level log entries |
+| `/failed` | List and analyze failed systemd units |
+| `/network-check` | Test network connectivity |
+| `/boot-log` | Analyze boot process for issues |
+| `/fix-packages` | Repair broken packages |
+
+### Recovery Agents
+
+Specialized agents for different recovery tasks (invoke with `@agent-name`):
+
+| Agent | Description |
+|-------|-------------|
+| `@diagnose` | System diagnostics specialist |
+| `@logs` | Log analysis and interpretation |
+| `@network` | Network troubleshooting |
+| `@disk` | Disk and filesystem issues |
+| `@services` | Systemd service management |
+| `@packages` | Package management and repair |
+
 ### Example Recovery Tasks
 
 ```
@@ -63,6 +126,16 @@ sudo ./install.sh --root
 
 "Check if there are any failed systemd services and help me fix them."
 ```
+
+## Updating Recovery Tools
+
+To update the recovery agents and commands to the latest version:
+
+```bash
+sudo update-claude-recovery
+```
+
+This fetches the latest agents and commands from GitHub.
 
 ## Uninstallation
 
@@ -88,6 +161,9 @@ sudo ./uninstall.sh
 | Systemd target | `/etc/systemd/system/claude-recovery.target` |
 | Getty service | `/etc/systemd/system/claude-recovery-getty@.service` |
 | Launcher | `/usr/local/bin/claude-recovery-launcher` |
+| Update script | `/usr/local/bin/update-claude-recovery` |
+| Recovery agents | `/usr/local/share/claude-recovery/agents/` |
+| Recovery commands | `/usr/local/share/claude-recovery/commands/` |
 | Config marker | `/etc/claude-recovery-mode.conf` |
 
 ## Troubleshooting
