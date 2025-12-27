@@ -36,22 +36,26 @@ curl -fsSL https://bit.ly/claude-rescue | sudo bash -s -- --root
 ```
 
 <details>
-<summary>Alternative URLs</summary>
+<summary>Alternative URLs & Notes</summary>
 
-Hosted URL:
+The Bitly link is provided for convenience at the terminal—no usage tracking is performed. If you prefer, you can use the hosted URL or fetch directly from GitHub:
+
+**Hosted URL** (always points to latest):
 ```bash
 curl -fsSL https://hosted.danielrosehill.com/claude-rescue/bootstrap.sh | sudo bash
 ```
 
-Versioned URL (v1):
+**Versioned URL (v1)**:
 ```bash
 curl -fsSL https://hosted.danielrosehill.com/claude-rescue/v1/bootstrap.sh | sudo bash
 ```
 
-Direct from GitHub:
+**Direct from GitHub**:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/danielrosehill/Claude-System-Recovery-Mode/main/bootstrap.sh | sudo bash
 ```
+
+The Bitly link redirects to the latest version. The versioned URL (v1) is provided for stability if you want to pin to a specific release.
 </details>
 
 ## Requirements
