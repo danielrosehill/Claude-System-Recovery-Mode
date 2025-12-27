@@ -23,17 +23,36 @@ Instead of booting into a blank recovery shell, this mode launches directly into
 One command to install Claude Recovery Mode:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/danielrosehill/Claude-System-Recovery-Mode/main/bootstrap.sh | sudo bash
+curl -fsSL https://bit.ly/claude-rescue | sudo bash
 ```
 
 Options:
 ```bash
 # Install for specific user
-curl -fsSL https://raw.githubusercontent.com/danielrosehill/Claude-System-Recovery-Mode/main/bootstrap.sh | sudo bash -s -- --user myuser
+curl -fsSL https://bit.ly/claude-rescue | sudo bash -s -- --user myuser
 
 # Install for root
-curl -fsSL https://raw.githubusercontent.com/danielrosehill/Claude-System-Recovery-Mode/main/bootstrap.sh | sudo bash -s -- --root
+curl -fsSL https://bit.ly/claude-rescue | sudo bash -s -- --root
 ```
+
+<details>
+<summary>Alternative URLs</summary>
+
+Hosted URL:
+```bash
+curl -fsSL https://hosted.danielrosehill.com/claude-rescue/bootstrap.sh | sudo bash
+```
+
+Versioned URL (v1):
+```bash
+curl -fsSL https://hosted.danielrosehill.com/claude-rescue/v1/bootstrap.sh | sudo bash
+```
+
+Direct from GitHub:
+```bash
+curl -fsSL https://raw.githubusercontent.com/danielrosehill/Claude-System-Recovery-Mode/main/bootstrap.sh | sudo bash
+```
+</details>
 
 ## Requirements
 
