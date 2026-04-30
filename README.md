@@ -4,6 +4,8 @@ A custom GRUB boot entry that provides AI-assisted system recovery using [Claude
 
 Instead of booting into a blank recovery shell, this mode launches directly into Claude CLI, giving you an intelligent assistant to help diagnose and fix system issues.
 
+This repo doubles as a **Claude Code plugin** — install it via the Claude Code marketplace and you'll get the recovery commands (`/status`, `/errors`, `/failed`, `/network-check`, `/boot-log`, `/fix-packages`) and agents (`diagnose`, `logs`, `network`, `disk`, `services`, `packages`) inside any normal Claude Code session, without the GRUB/systemd install. Install via `/plugin marketplace add danielrosehill/Claude-Code-Plugins` then `/plugin install system-recovery-mode@danielrosehill`.
+
 ## Features
 
 - **Guided Recovery Workflow**: Pre-populated slash commands guide you through diagnosis and remediation

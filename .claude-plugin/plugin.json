@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "system-recovery-mode",
+  "version": "1.0.0",
+  "description": "AI-assisted Linux system recovery — slash commands and agents for diagnosing and fixing a broken system from a minimal recovery TTY. Pairs with an optional GRUB/systemd installer that boots straight into Claude CLI.",
+  "author": {
+    "name": "Daniel Rosehill",
+    "email": "public@danielrosehill.com",
+    "url": "https://danielrosehill.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/danielrosehill/Claude-System-Recovery-Mode",
+  "repository": "https://github.com/danielrosehill/Claude-System-Recovery-Mode",
+  "keywords": [
+    "recovery",
+    "sysadmin",
+    "linux",
+    "diagnostics",
+    "grub",
+    "systemd"
+  ]
+}

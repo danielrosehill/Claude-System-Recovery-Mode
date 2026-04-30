@@ -167,15 +167,15 @@ install_recovery_config() {
     mkdir -p "$dest/commands"
 
     # Copy agents
-    if [[ -d "${SCRIPT_DIR}/claude-config/agents" ]]; then
-        cp -f "${SCRIPT_DIR}/claude-config/agents"/*.md "$dest/agents/" 2>/dev/null || true
+    if [[ -d "${SCRIPT_DIR}/agents" ]]; then
+        cp -f "${SCRIPT_DIR}/agents"/*.md "$dest/agents/" 2>/dev/null || true
         local agent_count=$(ls -1 "$dest/agents"/*.md 2>/dev/null | wc -l)
         success "Installed $agent_count recovery agents"
     fi
 
     # Copy commands
-    if [[ -d "${SCRIPT_DIR}/claude-config/commands" ]]; then
-        cp -f "${SCRIPT_DIR}/claude-config/commands"/*.md "$dest/commands/" 2>/dev/null || true
+    if [[ -d "${SCRIPT_DIR}/commands" ]]; then
+        cp -f "${SCRIPT_DIR}/commands"/*.md "$dest/commands/" 2>/dev/null || true
         local command_count=$(ls -1 "$dest/commands"/*.md 2>/dev/null | wc -l)
         success "Installed $command_count recovery commands"
     fi

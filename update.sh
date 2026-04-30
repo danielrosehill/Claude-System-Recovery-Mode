@@ -81,7 +81,7 @@ update_agents() {
     mkdir -p "$INSTALL_DIR/agents"
 
     for agent in "${agents[@]}"; do
-        local url="${RAW_BASE}/claude-config/agents/${agent}.md"
+        local url="${RAW_BASE}/agents/${agent}.md"
         local dest="$INSTALL_DIR/agents/${agent}.md"
 
         if download_file "$url" "$dest"; then
@@ -104,7 +104,7 @@ update_commands() {
     mkdir -p "$INSTALL_DIR/commands"
 
     for cmd in "${commands[@]}"; do
-        local url="${RAW_BASE}/claude-config/commands/${cmd}.md"
+        local url="${RAW_BASE}/commands/${cmd}.md"
         local dest="$INSTALL_DIR/commands/${cmd}.md"
 
         if download_file "$url" "$dest"; then

@@ -107,7 +107,7 @@ download_files() {
     cd "$TEMP_DIR"
 
     # Create directory structure
-    mkdir -p scripts systemd grub claude-config/agents claude-config/commands
+    mkdir -p scripts systemd grub agents commands
 
     # List of files to download
     local files=(
@@ -118,18 +118,18 @@ download_files() {
         "systemd/claude-recovery.target"
         "systemd/claude-recovery-getty@.service"
         "grub/45_claude-recovery"
-        "claude-config/agents/diagnose.md"
-        "claude-config/agents/logs.md"
-        "claude-config/agents/network.md"
-        "claude-config/agents/disk.md"
-        "claude-config/agents/services.md"
-        "claude-config/agents/packages.md"
-        "claude-config/commands/status.md"
-        "claude-config/commands/errors.md"
-        "claude-config/commands/failed.md"
-        "claude-config/commands/network-check.md"
-        "claude-config/commands/boot-log.md"
-        "claude-config/commands/fix-packages.md"
+        "agents/diagnose.md"
+        "agents/logs.md"
+        "agents/network.md"
+        "agents/disk.md"
+        "agents/services.md"
+        "agents/packages.md"
+        "commands/status.md"
+        "commands/errors.md"
+        "commands/failed.md"
+        "commands/network-check.md"
+        "commands/boot-log.md"
+        "commands/fix-packages.md"
     )
 
     local failed=0
